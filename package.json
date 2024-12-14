@@ -1,0 +1,17 @@
+{
+  "name": "codial",
+  "version": "1.0.0",
+  "description": "my own social media web application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "social"
+  ],
+  "author": "sanya goyal",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
