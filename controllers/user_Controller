@@ -1,7 +1,9 @@
+const passport=require('passport');
 module.exports.profile = function(req,res){
     res.end('<h1> user profile</h1>');
 }
 var User = require('../models/user');
+
 module.exports.createUser = async function(req,res){
     
 let item = new User({
@@ -14,7 +16,7 @@ try{
 }catch(err){
     console.log("error in creating new user in db", err);
 }
-return res.render('signin');
+return res.redirect('/loginpage');
     };
     //manual authentication
     // module.exports.login= async function(req,res){

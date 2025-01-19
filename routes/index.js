@@ -7,9 +7,9 @@ router.use(express.urlencoded());
 router.use('/users',require('./users'));
 
 router.get('/home',homecontroller.home);
-router.get('/loginpage',passport.checkAuthenticated,homecontroller.profilepage);
+router.get('/loginpage',homecontroller.loginpage);
 router.get('/signup',passport.checkAuthenticated,homecontroller.signup);
-
+router.get("/signout",homecontroller.signout);
 router.get('/profilepage',passport.checkAuthenticated,homecontroller.profilepage);
 
 

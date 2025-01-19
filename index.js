@@ -8,7 +8,7 @@ const passport=require('passport');
 const passportLocal=require('./config/passport-local-straegy');
 const cookieparser = require('cookie-parser');
 const MongoDbStore = require('connect-mongodb-session')(session);
-
+const expresslayouts= require('express-ejs-layouts');
 
 app.use(express.urlencoded());
 const store = new MongoDbStore({
@@ -26,6 +26,7 @@ store.on('error',function(err){
 
 app.set('view engine','ejs');
 app.set('views','./views');
+app.use(expresslayouts);
 
 app.use(session({
     name:'codial', 
