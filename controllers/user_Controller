@@ -1,3 +1,49 @@
 module.exports.profile = function(req,res){
     res.end('<h1> user profile</h1>');
 }
+var User = require('../models/user');
+module.exports.createUser = async function(req,res){
+    
+let item = new User({
+    name : req.body.name,
+    username:req.body.username,
+    password : req.body.password
+});
+try{
+    await item.save();
+}catch(err){
+    console.log("error in creating new user in db", err);
+}
+return res.render('signin');
+    };
+    //manual authentication
+    // module.exports.login= async function(req,res){
+    //     let username1=req.body.username;
+    //     let pass=req.body.password;
+    //     try{
+    // var result  =   await User.findOne({username : username1,password : pass});
+    //     }catch(err){
+    //         console.log("error in finding document during login",err);
+    //         return res.send('error in logging in');
+    //     }
+    //     if(result){
+    //         res.cookie('user_id',result._id);
+    //         res.cookie('authenticated','true');
+    //         console.log('user found in db');
+    //         return res.redirect('/profilepage');
+           
+    
+    //     }
+    // return res.redirect('back');
+    // }
+    module.exports.login = function(req,res){
+        return res.redirect('/profilepage');
+    }
+
+
+    //manual signout
+// module.exports.signout= function(req,res){
+//     res.cookie('authenticated','false');
+//     res.clearCookie('user_id');
+//     return res.redirect('/loginpage');
+// }

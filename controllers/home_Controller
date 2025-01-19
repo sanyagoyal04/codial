@@ -1,3 +1,40 @@
+
+const User = require('../models/user');
 module.exports.home = function(req,res){
     return res.end('home page for codial!!');
+}
+module.exports.loginpage = function(req,res){
+    res.render('signin');
+
+}
+
+module.exports.signup = function(req,res){
+    return res.render('signup');
+}
+module.exports.profilepage= async function(req,res){
+    console.log("request to profie page recieved");
+//    
+//  if(req.cookies.userid){
+//         console.log('user not authenticated');
+// return res.redirect('/loginpage');
+//     }
+//     else{
+    
+//     var userid=req.cookies.user_id;
+
+//     try{
+//     var User1 = await User.findById(userid);
+// }catch(err){
+//     console.log('error finding user by id');
+//     return res.send('error in finding user by id');
+// }
+// if(User1){
+//     console.log('user found by id ');
+//     return res.render('profilepage',{u:User1});
+// }
+// else{
+//     return res.send("find by id not working");
+// }
+// }
+return res.render('profilepage');
 }
