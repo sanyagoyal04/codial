@@ -1,0 +1,43 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h4>
+            posts
+        </h4>
+        <% if(locals.user){ %>
+        <div id="newpostsection">
+            <form action="/posts/createpost" method="POST">
+                <textarea id="content" name="content" rows="5" cols="16" placeholder="enter here..."></textarea>
+            <input type="submit" value="post">
+        </form>
+    </div>
+    <% } %>
+            <% for(let i of post_list){  %>
+                 <div  id="<%= i._id %>">
+               <br>  <h2> <%= i.content %></h3> 
+                 <h3> posted by :  <%= i.user.name %></h3> 
+                 <form action="comments/createcomment/<%= i.postid %>/<%= i.userid %>" method="POST">
+                 <div class=" newcommentform">
+                    <input type="text" name="commentcontent">
+                    <input type="submit" value="comment">
+                 </div>
+                </form>
+                </div>
+                <div class="post-comments-list-<%= i._id %>" >
+                    <ul>
+                        <% for(let j of i.comment){ %>
+                            
+                        <h4> <%= j.content %></h4>
+                        <h5>by <%= j.user.name %></h5>
+                            
+                            <% } %>
+                    </ul>
+                </div>
+            </div>
+                <% } %>
+            
+       
+    </body>
+</html>

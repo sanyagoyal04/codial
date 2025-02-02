@@ -1,11 +1,16 @@
 
 const User = require('../models/user');
+const Post = require('../models/post');
+const Comment = require('../models/comment');
 const passport=require('passport');
 module.exports.home = function(req,res){
     return res.end('home page for codial!!');
 }
 module.exports.loginpage = function(req,res){
-    res.render('signin');
+    if(req.isAuthenticated()){
+        return res.redirect('/home');
+    }
+  return res.render('signin');
 
 }
 
@@ -46,4 +51,23 @@ module.exports.profilepage= async function(req,res){
 // }
 // }
 return res.render('profilepage');
+}
+module.exports.home= async function(req,res){
+   try{
+    var posts= await Post.find()
+    .populate('user')
+    .populate({
+        path: 'comment',
+        populate:{
+            path:'user'
+        }
+    });
+   }catch(err){
+    console.log('error in fetching posts');
+    return;
+   }
+   
+
+  // console.log(results);
+    return res.render('home',{post_list: posts});
 }

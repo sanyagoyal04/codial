@@ -39,8 +39,8 @@ return res.redirect('/loginpage');
     // return res.redirect('back');
     // }
     module.exports.login = function(req,res){
-        return res.redirect('/profilepage');
-    }
+        return res.redirect('/home')};
+    
 
 
     //manual signout

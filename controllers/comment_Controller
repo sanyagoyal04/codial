@@ -1,0 +1,47 @@
+const Comment = require('../models/comment');
+const Post = require('../models/post');
+module.exports.createcomment = async function(req,res){
+let postid=req.params['postid'];
+try{
+    var post= await Post.findById(postid);
+}catch(err){
+    console.log('error in finding  by this id');
+return res.redirect('back');
+}
+if(!post){
+    console.log('no post found  by this id');
+    return res.redirect('back');
+}
+else{
+    let userid=req.params['userid'];
+    let content = req.body.commentcontent;
+    let item = new Comment({
+        content : content,
+        user : userid,
+        post : post._id
+    });
+    try{
+  var newcomment=  await Comment.collection.insertOne(item);
+    
+  console.log('value of newcomment is ',newcomment);
+//   post.comments.push(newcomment.insertedId);    
+//   post.save();
+// console.log('succesfully added comment id to array in post');
+
+    }catch(err){
+        console.log('error in inserting comment in db',err);
+    return res.redirect('back');
+}
+try{
+    console.log("trying to insert comment in array");
+    await Post.updateOne(
+        {_id: postid},
+        {$push: {comment : newcomment.insertedId}}
+    );
+}catch(err){
+    console.log('error inserting comment in post array');
+    
+}
+}
+return res.redirect('/home');
+}

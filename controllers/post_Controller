@@ -1,0 +1,21 @@
+const Post = require('../models/post');
+const passport = require('passport');
+module.exports.createpost = async function(req,res){
+    if(req.isAuthenticated()){
+        var item = new Post({
+            content: req.body.content,
+            user : req.user._id
+        });
+        
+            try{
+                await item.save();
+            }catch(err){
+                console.log('error in creating a post');
+                return;
+            }
+            return res.redirect('back');
+        }
+        else{
+            res.redirect('/loginpage');
+        }
+    }
