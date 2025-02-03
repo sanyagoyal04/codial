@@ -45,3 +45,32 @@ try{
 }
 return res.redirect('/home');
 }
+
+module.exports.destroy = async function(req,res){
+let dcomment;
+try{
+    dcomment= await Comment.findById(req.params.id);
+}catch(err){
+    console.log('error in finding comment by id');
+    return res.redirect('back');
+}
+if(dcomment&&dcomment.user._id==req.user.id){
+    
+    let postid=dcomment.post;
+try{
+    await Comment.findByIdAndDelete(req.params.id);
+}catch(err){
+    console.log('error in deleting comment');
+    return res.redirect('back');
+}
+try{
+   await Post.findByIdAndUpdate(postid,{$pull : {comment: req.params.id}});
+}catch(err){
+    console.log('error in deleting comment from post');
+return res.redirect('back');
+}
+}else{
+    console.log('either comment not found or user not authorised');
+}
+return res.redirect('back');
+}

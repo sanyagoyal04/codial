@@ -16,21 +16,32 @@
     <% } %>
             <% for(let i of post_list){  %>
                  <div  id="<%= i._id %>">
-               <br>  <h2> <%= i.content %></h3> 
-                 <h3> posted by :  <%= i.user.name %></h3> 
-                 <form action="comments/createcomment/<%= i.postid %>/<%= i.userid %>" method="POST">
+               <br>  <h2> <%= i.content %></h2> 
+                 <h4> posted by :  <%= i.user.name %></h4> 
+                 <% if((locals.user)&&(locals.user.id==i.user.id)){ %>
+                 <a href="/posts/destroy/<%=i.id %>">delete post</a>
+                 <% } %>
+                 <% if(locals.user){ %>
+                 <form action="/comments/createcomment/<%= i._id %>/<%= i.user._id %>" method="POST">
                  <div class=" newcommentform">
                     <input type="text" name="commentcontent">
                     <input type="submit" value="comment">
                  </div>
                 </form>
+                <% } %>
                 </div>
                 <div class="post-comments-list-<%= i._id %>" >
                     <ul>
                         <% for(let j of i.comment){ %>
                             
-                        <h4> <%= j.content %></h4>
-                        <h5>by <%= j.user.name %></h5>
+                        <h4><%= j.content %>&nbsp; by-&nbsp;<%= j.user.name %> 
+                            <% if((locals.user)&&(locals.user.id==j.user.id)){ %>
+ 
+                            <a href="/comments/destroy/<%= j._id%>">&nbsp;&nbsp;delete comment</a> 
+                            <% } %>
+                        </h4>
+
+                         
                             
                             <% } %>
                     </ul>
